@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <a href='#'><img src='https://img.shields.io/badge/Homepage-RoT-6c5ce7?logo=github&logoColor=white'></a>
+  <a href='https://wyfdut.github.io/SPAN/'><img src='https://img.shields.io/badge/Homepage-RoT-6c5ce7?logo=github&logoColor=white'></a>
   <a href='https://arxiv.org/abs/2511.06702'><img src='https://img.shields.io/badge/Paper-arXiv-d63031?logo=arxiv&logoColor=white'></a>
   <a href='https://huggingface.co/yifanwang08/SPAN_Validation/tree/main'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-0984e3'></a>
   <a href='https://github.com/WYFDUT/SPAN'><img src='https://img.shields.io/badge/Code-GitHub-181717?logo=github'></a>
