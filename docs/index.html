@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Meta tags for social media banners -->
+    <meta name="description"
+        content="SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection">
+    <meta property="og:title" content="SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection" />
+    <meta property="og:description"
+        content="A unified geometric consistency optimization paradigm for monocular 3D object detection that comprises Spatial Point Alignment and 3D-2D Projection Alignment." />
+    <meta property="og:url" content="https://github.com/WYFDUT/SPAN" />
+    <meta property="og:image" content="../figures/overview_new.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:title" content="SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection">
+    <meta name="twitter:description"
+        content="A unified geometric consistency optimization paradigm for monocular 3D object detection.">
+    <meta name="twitter:image" content="../figures/overview_new.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="keywords" content="3D object detection, monocular vision, geometric alignment, autonomous driving, CVPR 2026">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>SPAN: Spatial-Projection Alignment</title>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #a855f7;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        .hero-body {
+            padding: 3rem 1.5rem;
+        }
+
+        .publication-title {
+            font-family: 'Google Sans', sans-serif;
+            font-weight: 700;
+            background: var(--bg-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .publication-authors {
+            font-family: 'Google Sans', sans-serif;
+        }
+
+        .author-block {
+            display: inline-block;
+        }
+
+        .link-block a {
+            margin: 5px;
+        }
+
+        .button.is-dark {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .button.is-dark:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        section.hero.is-light {
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .hero.is-small .hero-body {
+            padding: 2rem 1.5rem;
+        }
+
+        .section {
+            padding: 3rem 1.5rem;
+        }
+
+        .content h2.title {
+            font-family: 'Google Sans', sans-serif;
+            color: var(--primary-color);
+        }
+
+        .content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .feature-card h4 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .figure-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin: 2rem 0;
+        }
+
+        .figure-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .figure-caption {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #64748b;
+            text-align: center;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table.results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        table.results-table th {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 12px 16px;
+            text-align: center;
+        }
+
+        table.results-table td {
+            padding: 10px 16px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        table.results-table tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .best-result {
+            background-color: #dcfce7 !important;
+            font-weight: 600;
+        }
+
+        pre {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .method-step {
+            display: flex;
+            align-items: flex-start;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .method-step .step-number {
+            background: var(--bg-gradient);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .formula-box {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        footer {
+            background: #1e293b;
+            color: #94a3b8;
+            padding: 2rem;
+        }
+
+        footer a {
+            color: #a5b4fc;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .icon-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            .publication-title {
+                font-size: 1.5rem !important;
+            }
+
+            .hero-body {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-2 publication-title">
+                            SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection
+                        </h1>
+
+                        <div class="is-size-5 publication-authors" style="margin-top: 1.5rem;">
+                            <span class="author-block">Yifan Wang<sup>1</sup>,</span>
+                            <span class="author-block">Yian Zhao<sup>2</sup>,</span>
+                            <span class="author-block">Fanqi Pu<sup>1</sup>,</span>
+                            <span class="author-block">Xiaochen Yang<sup>3</sup>,</span>
+                            <span class="author-block">Yang Tang<sup>4</sup>,</span>
+                            <span class="author-block">Xi Chen<sup>4</sup>,</span>
+                            <span class="author-block">Wenming Yang<sup>1,†</sup></span>
+                        </div>
+
+                        <div class="is-size-6 publication-authors" style="margin-top: 1rem; color: #64748b;">
+                            <span class="author-block"><sup>1</sup>Tsinghua University</span>&nbsp;&nbsp;
+                            <span class="author-block"><sup>2</sup>Peking University</span>&nbsp;&nbsp;
+                            <span class="author-block"><sup>3</sup>University of Glasgow</span>&nbsp;&nbsp;
+                            <span class="author-block"><sup>4</sup>Tencent BAC</span>
+                            <br>
+                            <span style="font-size: 0.9rem;"><sup>†</sup>Corresponding Author</span>
+                            <br>
+                            <span style="font-size: 0.9rem; font-family: monospace;">yf-wang23@mails.tsinghua.edu.cn &nbsp;&nbsp; yang.wenming@sz.tsinghua.edu.cn</span>
+                        </div>
+
+                        <!-- Links -->
+                        <div class="link-block" style="margin-top: 2rem;">
+                            <a href="https://arxiv.org/abs/2511.06702" target="_blank"
+                                class="external-link button is-normal is-rounded is-dark">
+                                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                                <span>Paper</span>
+                            </a>
+                            <a href="https://github.com/WYFDUT/SPAN" target="_blank"
+                                class="external-link button is-normal is-rounded is-dark">
+                                <span class="icon"><i class="fab fa-github"></i></span>
+                                <span>Code</span>
+                            </a>
+                            <a href="https://huggingface.co/yifanwang08/SPAN_Validation/tree/main" target="_blank"
+                            class="external-link button is-normal is-rounded is-dark">
+                            <span class="icon">🤗</span>
+                            <span>Models</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Abstract -->
+    <section class="section hero is-light">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">📄 Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            Existing monocular 3D detectors typically tame the pronounced nonlinear regression of 3D bounding box through decoupled prediction paradigm, which employs multiple branches to estimate geometric center, depth, dimensions, and rotation angle separately. Although this decoupling strategy simplifies the learning process, it inherently ignores the geometric collaborative constraints between different attributes, resulting in the lack of geometric consistency prior, thereby leading to suboptimal performance.
+                        </p>
+                        <p>
+                            To address this issue, we propose novel <b style="color:#6366f1;">Spatial-Projection Alignment (SPAN)</b> with two pivotal components: (i) <b style="color:#6366f1;">Spatial Point Alignment</b> enforces an explicit global spatial constraint between predicted and ground-truth 3D bounding boxes, thereby rectifying spatial drift caused by decoupled attribute regression. (ii) <b style="color:#6366f1;">3D-2D Projection Alignment</b> ensures that the projected 3D box is aligned tightly within its corresponding 2D detection bounding box on the image plane, mitigating projection misalignment overlooked in previous works.
+                        </p>
+                        <div class="highlight-box">
+                            <p style="margin: 0;">
+                                <strong>🎯 Key Results:</strong> Extensive experiments demonstrate that the proposed method can be easily integrated into any established monocular 3D detector and delivers significant performance improvements. Our method achieves <b>+0.92%</b> improvement in moderate AP<sub>3D</sub> on KITTI validation set with MonoDGP baseline, without any additional inference overhead.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="section" id="Overview">
+        <div class="container is-max-desktop content">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-five-fifths">
+                    <h2 class="title is-3">🌟 Overview</h2>
+
+                    <div class="columns is-multiline is-centered" style="margin-top: 2rem;">
+                        <div class="column is-6">
+                            <div class="feature-card">
+                                <h4><i class="fas fa-cube"></i> Spatial Point Alignment</h4>
+                                <p>Enforces explicit global spatial constraints by aligning eight corner coordinates of predicted 3D boxes with ground-truth corners, rectifying spatial drift.</p>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="feature-card">
+                                <h4><i class="fas fa-project-diagram"></i> 3D-2D Projection Alignment</h4>
+                                <p>Ensures projected 3D boxes align tightly with their corresponding 2D detection boxes, satisfying fundamental perspective projection constraints.</p>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="feature-card">
+                                <h4><i class="fas fa-layer-group"></i> Hierarchical Task Learning</h4>
+                                <p>Progressive training strategy that dynamically adjusts loss weights, ensuring stable optimization and preventing early-stage error propagation.</p>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="feature-card">
+                                <h4><i class="fas fa-plug"></i> Plug-and-Play</h4>
+                                <p>Can be seamlessly integrated into any monocular 3D detector without additional inference overhead or architectural modifications.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Figure -->
+    <section class="section hero is-light" id="Introduction">
+        <div class="container is-max-desktop content">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-five-fifths">
+                    <h2 class="title is-3">💡 Motivation</h2>
+                    <div class="figure-container">
+                        <img src="../figures/intro_new_page-0001.jpg" alt="Introduction and Motivation">
+                        <p class="figure-caption">
+                            <strong>Figure 1:</strong> Previous methods typically neglect the geometric collaborative constraints between different attributes, resulting in spatial errors and projection misalignment. Our method aligns 3D corners and matches 3D projections with 2D boxes to improve detection accuracy and consistency.
+                        </p>
+                    </div>
+                    <div class="content has-text-justified" style="margin-top: 2rem;">
+                        <p>
+                            Most existing monocular 3D detection frameworks employ a decoupled regression paradigm, wherein seven degrees-of-freedom parameters are predicted by separate heads. Although this factorization streamlines learning objectives, its intrinsic disregard for geometric collaborative constraints has gradually become a major bottleneck that impedes further performance gains.
+                        </p>
+                        <p>
+                            <b style="color:#6366f1;">SPAN</b> addresses this gap by explicitly integrating <em>Spatial-Projection Alignment</em> into an end-to-end framework. Our central idea is to impose geometrically collaborative constraints on every set of 3D bounding box attributes and to optimize them jointly to enhance both spatial and projection coherence.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Method -->
+    <section class="section" id="Method">
+        <div class="container is-max-desktop content">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-five-fifths">
+                    <h2 class="title is-3">🔬 Method</h2>
+
+                    <div class="figure-container">
+                        <img src="../figures/overview_new.jpg" alt="Overview of SPAN">
+                        <p class="figure-caption">
+                            <strong>Figure 2:</strong> Overview of SPAN. The proposed method can be seamlessly plugged into the training pipeline of any monocular 3D detector. It computes eight corner points of predicted 3D boxes, applies Spatial Point Alignment loss, projects corners onto 2D plane, and uses 3D-2D Projection Alignment loss to ensure geometric consistency.
+                        </p>
+                    </div>
+
+                    <div class="content has-text-justified" style="margin-top: 2rem;">
+                        <h3 style="color: #6366f1;"><i class="fas fa-cube"></i> Spatial Point Alignment</h3>
+                        <p>
+                            The Spatial Point Alignment loss constrains the eight corner coordinates of predicted 3D bounding boxes to align with ground-truth corners. We employ the MGIoU scheme, which breaks the 3D overlap problem down into three simpler one-dimensional projection problems, computing 1D GIoU for each axis and averaging to obtain the final 3D MGIoU.
+                        </p>
+
+                        <h3 style="color: #6366f1; margin-top: 2rem;"><i class="fas fa-project-diagram"></i> 3D-2D Projection Alignment</h3>
+                        <p>
+                            The 3D-2D Projection Alignment ensures that the projected 3D box aligns tightly within its corresponding 2D detection bounding box. We project the eight corner points of predicted 3D boxes onto the image plane using camera intrinsics, compute the minimal enclosing rectangle, and measure its overlap with the ground-truth 2D box using 2D GIoU.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hierarchical Task Learning -->
+    <section class="section hero is-light" id="Training">
+        <div class="container is-max-desktop content">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-five-fifths">
+                    <h2 class="title is-3">📚 Hierarchical Task Learning Strategy</h2>
+
+                    <div class="figure-container">
+                        <img src="../figures/htl_new_page-0001.jpg" alt="Hierarchical Task Learning">
+                        <p class="figure-caption">
+                            <strong>Figure 3:</strong> Illustration of the task hierarchy. The overall training process is divided into four sequential stages. Under the dynamic adjustment of Hierarchical Task Learning, a subsequent stage can only receive a significant loss weight once its pre-tasks have been trained to a stable state.
+                        </p>
+                    </div>
+
+                    <div class="content has-text-justified" style="margin-top: 2rem;">
+                        <div class="method-step">
+                            <div class="step-number">1</div>
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0; color: #6366f1;">Stage 1: 2D Detection</h4>
+                                <p style="margin: 0;">
+                                    Focuses on object classification, 2D box localization, and projected center regression.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="method-step">
+                            <div class="step-number">2</div>
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0; color: #6366f1;">Stage 2: 3D Attributes</h4>
+                                <p style="margin: 0;">
+                                    Addresses 3D dimension and rotation angle regression, treating Stage 1 tasks as prerequisites.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="method-step">
+                            <div class="step-number">3</div>
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0; color: #6366f1;">Stage 3: Depth Estimation</h4>
+                                <p style="margin: 0;">
+                                    Performs depth estimation, which relies on geometric relationships between 2D box attributes from Stage 1 and 3D attributes from Stage 2.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="method-step">
+                            <div class="step-number">4</div>
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0; color: #6366f1;">Stage 4: Spatial-Projection Alignment</h4>
+                                <p style="margin: 0;">
+                                    Introduces Spatial-Projection Alignment losses, which depend on all preceding 3D attribute regression tasks. This staged design ensures training stability throughout the optimization process.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiments -->
+    <section class="section" id="Experiments">
+        <div class="container is-max-desktop content">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-five-fifths">
+                    <h2 class="title is-3">📊 Experiments</h2>
+
+                    <div class="content has-text-justified">
+                        <h3 style="color: #6366f1;">Main Results on KITTI Dataset</h3>
+                        <p>
+                            We evaluate SPAN on the widely used KITTI benchmark, which contains 7,481 training images and 7,518 test images, covering three object categories: Car, Pedestrian, and Cyclist.
+                        </p>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Extra Data</th>
+                                    <th>Easy</th>
+                                    <th>Mod.</th>
+                                    <th>Hard</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" style="background: #f1f5f9; font-weight: 600;">KITTI Test Set - Car Category (AP<sub>3D|R40</sub>)</td>
+                                </tr>
+                                <tr>
+                                    <td>MonoDGP</td>
+                                    <td>None</td>
+                                    <td>26.35</td>
+                                    <td>18.72</td>
+                                    <td>15.97</td>
+                                </tr>
+                                <tr class="best-result">
+                                    <td><strong>MonoDGP + SPAN</strong></td>
+                                    <td>None</td>
+                                    <td><strong>27.02</strong></td>
+                                    <td><strong>19.30</strong></td>
+                                    <td><strong>16.49</strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="background: #f1f5f9; font-weight: 600; padding-top: 1rem;">KITTI Val Set - Car Category (AP<sub>3D|R40</sub>)</td>
+                                </tr>
+                                <tr>
+                                    <td>MonoDETR</td>
+                                    <td>None</td>
+                                    <td>28.84</td>
+                                    <td>20.61</td>
+                                    <td>16.38</td>
+                                </tr>
+                                <tr class="best-result">
+                                    <td><strong>MonoDETR + SPAN</strong></td>
+                                    <td>None</td>
+                                    <td><strong>28.99</strong></td>
+                                    <td><strong>21.22</strong></td>
+                                    <td><strong>17.08</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>MoVis</td>
+                                    <td>None</td>
+                                    <td>28.46</td>
+                                    <td>20.77</td>
+                                    <td>17.70</td>
+                                </tr>
+                                <tr class="best-result">
+                                    <td><strong>MoVis + SPAN</strong></td>
+                                    <td>None</td>
+                                    <td><strong>28.65</strong></td>
+                                    <td><strong>21.44</strong></td>
+                                    <td><strong>18.52</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>MonoDGP</td>
+                                    <td>None</td>
+                                    <td>30.76</td>
+                                    <td>22.34</td>
+                                    <td>19.02</td>
+                                </tr>
+                                <tr class="best-result">
+                                    <td><strong>MonoDGP + SPAN</strong></td>
+                                    <td>None</td>
+                                    <td><strong>30.98</strong></td>
+                                    <td><strong>23.26</strong></td>
+                                    <td><strong>20.17</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="highlight-box" style="text-align: left;">
+                        <p style="margin: 0;">
+                            <strong>💡 Key Insight:</strong> SPAN consistently improves performance across different baseline models. On MonoDGP, our method achieves <strong>+0.92%</strong> improvement in moderate AP<sub>3D</sub> on the validation set and <strong>+0.58%</strong> on the test set, demonstrating the effectiveness and generalizability of the proposed approach.
+                        </p>
+                    </div>
+
+                    <div class="content has-text-justified" style="margin-top: 2rem;">
+                        <h3 style="color: #6366f1;">Ablation Study</h3>
+                        <p>
+                            Our ablation study systematically evaluates the contribution of each component. The best AP<sub>3D</sub> under three difficulty levels gains an increase of 0.36%, 0.92% and 1.15%, respectively, validating the effectiveness of each technique utilized in our proposed method.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Qualitative Results -->
+    <section class="section hero is-light" id="Visualization">
+        <div class="container is-max-desktop content">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-five-fifths">
+                    <h2 class="title is-3">🔍 Official Test Results</h2>
+
+                    <div class="figure-container">
+                        <img src="../figures/test_car.png" alt="Test Results - Car Category">
+                        <p class="figure-caption">
+                            <strong>Figure 4:</strong> Official KITTI test set results for Car category.
+                        </p>
+                    </div>
+
+                    <div class="figure-container">
+                        <img src="../figures/test_all.png" alt="Test Results - All Categories">
+                        <p class="figure-caption">
+                            <strong>Figure 5:</strong> Official KITTI test set results for all categories (Car, Pedestrian, Cyclist).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BibTeX -->
+    <section class="section hero is-light" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title is-3 has-text-centered">📚 Citation</h2>
+            <pre><code>@misc{wang2025spanspatialprojectionalignmentmonocular,
+  title={SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection}, 
+  author={Yifan Wang and Yian Zhao and Fanqi Pu and Xiaochen Yang and Yang Tang and Xi Chen and Wenming Yang},
+  year={2025},
+  eprint={2511.06702},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2511.06702}, 
+}</code></pre>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content has-text-centered">
+                        <p>
+                            This page was built using the <a
+                                href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                                target="_blank">Academic Project Page Template</a>.
+                        </p>
+                        <p>
+                            © 2025 SPAN | <a href="https://github.com/WYFDUT/SPAN"
+                                target="_blank">GitHub</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

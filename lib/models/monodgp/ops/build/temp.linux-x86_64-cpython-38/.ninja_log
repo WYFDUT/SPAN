@@ -1,0 +1,4 @@
+# ninja log v5
+0	7119	1750036958255078545	/media/data3/wangyf/MonoDGP/lib/models/monodgp/ops/build/temp.linux-x86_64-cpython-38/media/data3/wangyf/MonoDGP/lib/models/monodgp/ops/src/cpu/ms_deform_attn_cpu.o	bba16bcaf08afe53
+1	21882	1750036973006988322	/media/data3/wangyf/MonoDGP/lib/models/monodgp/ops/build/temp.linux-x86_64-cpython-38/media/data3/wangyf/MonoDGP/lib/models/monodgp/ops/src/vision.o	c0b993e41446f646
+0	47505	1750036998638831569	/media/data3/wangyf/MonoDGP/lib/models/monodgp/ops/build/temp.linux-x86_64-cpython-38/media/data3/wangyf/MonoDGP/lib/models/monodgp/ops/src/cuda/ms_deform_attn_cuda.o	59b5000066a529b3
