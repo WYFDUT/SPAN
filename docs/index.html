@@ -10,14 +10,14 @@
     <meta property="og:description"
         content="A unified geometric consistency optimization paradigm for monocular 3D object detection that comprises Spatial Point Alignment and 3D-2D Projection Alignment." />
     <meta property="og:url" content="https://github.com/WYFDUT/SPAN" />
-    <meta property="og:image" content="../figures/overview_new.jpg" />
+    <meta property="og:image" content="./figures/overview_new.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
     <meta name="twitter:title" content="SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection">
     <meta name="twitter:description"
         content="A unified geometric consistency optimization paradigm for monocular 3D object detection.">
-    <meta name="twitter:image" content="../figures/overview_new.jpg">
+    <meta name="twitter:image" content="./figures/overview_new.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="keywords" content="3D object detection, monocular vision, geometric alignment, autonomous driving, CVPR 2026">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -384,7 +384,7 @@
                 <div class="column is-five-fifths">
                     <h2 class="title is-3">💡 Motivation</h2>
                     <div class="figure-container">
-                        <img src="../figures/intro_new_page-0001.jpg" alt="Introduction and Motivation">
+                        <img src="./figures/intro_new_page-0001.jpg" alt="Introduction and Motivation">
                         <p class="figure-caption">
                             <strong>Figure 1:</strong> Previous methods typically neglect the geometric collaborative constraints between different attributes, resulting in spatial errors and projection misalignment. Our method aligns 3D corners and matches 3D projections with 2D boxes to improve detection accuracy and consistency.
                         </p>
@@ -410,7 +410,7 @@
                     <h2 class="title is-3">🔬 Method</h2>
 
                     <div class="figure-container">
-                        <img src="../figures/overview_new.jpg" alt="Overview of SPAN">
+                        <img src="./figures/overview_new.jpg" alt="Overview of SPAN">
                         <p class="figure-caption">
                             <strong>Figure 2:</strong> Overview of SPAN. The proposed method can be seamlessly plugged into the training pipeline of any monocular 3D detector. It computes eight corner points of predicted 3D boxes, applies Spatial Point Alignment loss, projects corners onto 2D plane, and uses 3D-2D Projection Alignment loss to ensure geometric consistency.
                         </p>
@@ -440,7 +440,7 @@
                     <h2 class="title is-3">📚 Hierarchical Task Learning Strategy</h2>
 
                     <div class="figure-container">
-                        <img src="../figures/htl_new_page-0001.jpg" alt="Hierarchical Task Learning">
+                        <img src="./figures/htl_new_page-0001.jpg" alt="Hierarchical Task Learning">
                         <p class="figure-caption">
                             <strong>Figure 3:</strong> Illustration of the task hierarchy. The overall training process is divided into four sequential stages. Under the dynamic adjustment of Hierarchical Task Learning, a subsequent stage can only receive a significant loss weight once its pre-tasks have been trained to a stable state.
                         </p>
@@ -609,14 +609,14 @@
                     <h2 class="title is-3">🔍 Official Test Results</h2>
 
                     <div class="figure-container">
-                        <img src="../figures/test_car.png" alt="Test Results - Car Category">
+                        <img src="./figures/test_car.png" alt="Test Results - Car Category">
                         <p class="figure-caption">
                             <strong>Figure 4:</strong> Official KITTI test set results for Car category.
                         </p>
                     </div>
 
                     <div class="figure-container">
-                        <img src="../figures/test_all.png" alt="Test Results - All Categories">
+                        <img src="./figures/test_all.png" alt="Test Results - All Categories">
                         <p class="figure-caption">
                             <strong>Figure 5:</strong> Official KITTI test set results for all categories (Car, Pedestrian, Cyclist).
                         </p>
