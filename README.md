@@ -12,7 +12,7 @@
 <br>
 
 <p align="center">
-  <b>Yifan Wang<sup>1,4</sup>, Yian Zhao<sup>2</sup>, Fanqi Pu<sup>1</sup>, Xiaochen Yang<sup>3</sup>, Yang Tang<sup>4</sup>, Xi Chen<sup>4</sup>, Wenming Yang<sup>1,†</sup></b><br>
+  <b>Yifan Wang<sup>1,4</sup>, Yian Zhao<sup>2</sup>, Fanqi Pu<sup>1</sup>, Xiaochen Yang<sup>3</sup>, Yang Tang<sup>4,†</sup>, Xi Chen<sup>4</sup>, Wenming Yang<sup>1,†</sup></b><br>
   <br>
   <sup>1</sup>Tsinghua University &nbsp;&nbsp; <sup>2</sup>Peking University &nbsp;&nbsp; <sup>3</sup>University of Glasgow &nbsp;&nbsp; <sup>4</sup>Tencent BAC &nbsp;&nbsp<br>
   <br>
