@@ -202,7 +202,7 @@ The official results in the paper on KITTI Test Split:
         <td div align="center">27.02%</td> 
         <td div align="center">19.30%</td> 
         <td div align="center">16.49%</td> 
-        <td align="center"><a href="#">-</a></td>
+        <td align="center"><a href="https://huggingface.co/yifanwang08/SPAN_Test/blob/main/span_test_0.pth">ckpt</a></td>
     </tr>  
 </table>
 
