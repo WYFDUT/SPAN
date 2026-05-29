@@ -223,14 +223,13 @@ All categories:
 If you use this code in your research, please cite:
 
 ```bibtex
-@misc{wang2025spanspatialprojectionalignmentmonocular,
-      title={SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection}, 
-      author={Yifan Wang and Yian Zhao and Fanqi Pu and Xiaochen Yang and Yang Tang and Xi Chen and Wenming Yang},
-      year={2025},
-      eprint={2511.06702},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2511.06702}, 
+@InProceedings{Wang_2026_CVPR,
+    author    = {Wang, Yifan and Zhao, Yian and Pu, Fanqi and Yang, Xiaochen and Tang, Yang and Chen, Xi and Yang, Wenming},
+    title     = {SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2026},
+    pages     = {40762-40771}
 }
 ```
 
